@@ -1,0 +1,27 @@
+html,body,.full-height{
+    height: 100% !important;
+}
+.my-background{
+    background: #6200EE;
+    height:100% !important;
+}
+.btn-my-primarydark{
+    background: #3700B3;
+    color:white;
+}
+.my-text-background{
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 20px;
+    color: white;
+}
+.reward_claim_box{
+    border: 1px solid #7300B3;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+td.the_wheel {
+     background-image: url("../images/wheel_back.png");
+     background-position: center;
+     background-repeat: no-repeat;
+}
