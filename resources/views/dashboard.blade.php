@@ -3,7 +3,7 @@
     <title>Be Good Luck</title>
     <script type="text/javascript" src="{{asset('js/Winwheel.js')}}"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
-
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <style>
         td.the_wheel
         {
@@ -19,7 +19,7 @@
         }
     </style>
 </head>
-<body>
+<body class="my-background">
 <div align="center" class="w-400">
     <table cellpadding="0" cellspacing="0" border="0">
         <tr>
@@ -27,17 +27,14 @@
                 <div class="power_controls">
                     <button id="spin_button" onClick="startSpin(10);">10 Coin Spin</button>
                     <br /><br />
-                    &nbsp;&nbsp;<a href="#" onClick="resetWheel(); return false;">Play Again</a><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(reset)
                 </div>
                 <div class="power_controls">
                     <button id="spin_button" onClick="startSpin(20);">20 Coin Spin</button>
                     <br /><br />
-                    &nbsp;&nbsp;<a href="#" onClick="resetWheel(); return false;">Play Again</a><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(reset)
                 </div>
                 <div class="power_controls">
                     <button id="spin_button" onClick="startSpin(30);">30 Coin Spin</button>
                     <br /><br />
-                    &nbsp;&nbsp;<a href="#" onClick="resetWheel(); return false;">Play Again</a><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(reset)
                 </div>
             </td>
             <td width="438" height="582" class="the_wheel" align="center" valign="center">
@@ -63,19 +60,18 @@
         'numSegments'     : 12,         // Specify number of segments.
         'segments'        :             // Define segments including colour and text.
             [                               // font size and test colour overridden on backrupt segments.
-                {'fillStyle' : '#3600BB', 'text' : '2', 'textFontSize' : 16, 'textFillStyle' : '#ffffff'},
-                {'fillStyle' : '#7200B3', 'text' : '1/2', 'textFontSize' : 16, 'textFillStyle' : '#ffffff'},
-                {'fillStyle' : '#444444', 'text' : '1   ', 'textFontSize' : 16, 'textFillStyle' : '#ffffff'},
-                {'fillStyle' : '#3600BB', 'text' : '1', 'textFontSize' : 16, 'textFillStyle' : '#ffffff'},
-                {'fillStyle' : '#7200B3', 'text' : '1/2', 'textFontSize' : 16, 'textFillStyle' : '#ffffff'},
-                {'fillStyle' : '#444444', 'text' : '2', 'textFontSize' : 16, 'textFillStyle' : '#ffffff'},
-                {'fillStyle' : '#3600BB', 'text' : '1', 'textFontSize' : 16, 'textFillStyle' : '#ffffff'},
-                {'fillStyle' : '#7200B3', 'text' : '1/4', 'textFontSize' : 16, 'textFillStyle' : '#ffffff'},
-                {'fillStyle' : '#444444', 'text' : '3', 'textFontSize' : 16, 'textFillStyle' : '#ffffff'},
-                {'fillStyle' : '#3600BB', 'text' : '1','textFontSize' : 16, 'textFillStyle' : '#ffffff'},
-                {'fillStyle' : '#7200B3', 'text' : '1/4', 'textFontSize' : 16, 'textFillStyle' : '#ffffff'},
-                {'fillStyle' : '#444444', 'text' : '4', 'textFontSize' : 16, 'textFillStyle' : '#ffffff'},
-
+                {'fillStyle' : '#7600bb', 'text' : '1/2 D', 'textFontSize' : 16, 'textFillStyle' : '#ffffff'},
+                {'fillStyle' : '#b300bb', 'text' : '1 D', 'textFontSize' : 16, 'textFillStyle' : '#ffffff'},
+                {'fillStyle' : '#772200', 'text' : '2 D', 'textFontSize' : 16, 'textFillStyle' : '#ffffff'},
+                {'fillStyle' : '#7600bb', 'text' : '1/4 D', 'textFontSize' : 16, 'textFillStyle' : '#ffffff'},
+                {'fillStyle' : '#7600bb', 'text' : '1/2 D', 'textFontSize' : 16, 'textFillStyle' : '#ffffff'},
+                {'fillStyle' : '#b300bb', 'text' : '2 D', 'textFontSize' : 16, 'textFillStyle' : '#ffffff'},
+                {'fillStyle' : '#772200', 'text' : '4 D', 'textFontSize' : 16, 'textFillStyle' : '#ffffff'},
+                {'fillStyle' : '#7600bb', 'text' : '1/4 D', 'textFontSize' : 16, 'textFillStyle' : '#ffffff'},
+                {'fillStyle' : '#7600bb', 'text' : '1/2 D', 'textFontSize' : 16, 'textFillStyle' : '#ffffff'},
+                {'fillStyle' : '#b300bb', 'text' : '1 D', 'textFontSize' : 16, 'textFillStyle' : '#ffffff'},
+                {'fillStyle' : '#772200', 'text' : '5 D', 'textFontSize' : 16, 'textFillStyle' : '#ffffff'},
+                {'fillStyle' : '#7600bb', 'text' : '1/4 D', 'textFontSize' : 16, 'textFillStyle' : '#ffffff'},
             ],
         'animation' :           // Specify the animation to use.
             {
@@ -88,7 +84,7 @@
             },
         'pins' :				// Turn pins on.
             {
-                'number'     : 7,
+                'number'     : 12,
                 'fillStyle'  : 'silver',
                 'outerRadius': 4,
             }
@@ -122,11 +118,14 @@
         reducePoints(count);
     }
     function reducePoints(count) {
+        var id = '<?php echo Auth::user()->id; ?>';
+
         $.ajax({
             type:'POST',
             url:'{{asset("api/reducepoints")}}',
-            data:'points= '+count,
+            data:{"points":count,"id":id},
             success:function(data) {
+                if (data.success){
                 wheelPower = 3;
                 theWheel.animation.stopAngle = theWheel.getRandomForSegment(data.stopat);
                 // Ensure that spinning can't be clicked again while already running.
@@ -153,6 +152,9 @@
                     wheelSpinning = true;
                 }
 
+            }else{
+                    alert(data.data);
+                }
             }
         });
     }

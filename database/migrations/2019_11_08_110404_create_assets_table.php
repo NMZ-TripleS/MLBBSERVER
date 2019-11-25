@@ -20,6 +20,8 @@ class CreateAssetsTable extends Migration
             $table->integer("t_d_count")->default(0);
             $table->integer("p_count")->default(0);
             $table->integer("t_p_count")->default(0);
+            $table->integer("answered_count")->default(0);
+            $table->integer("right_answered_count")->default(0);
             $table->integer("four_one_count")->default(0);
             $table->integer("three_one_count")->default(0);
             $table->timestamps();
