@@ -15,3 +15,4 @@ Auth::routes();
 Route::get('/','HomeController@index')->name('/');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/dashboard','DashboardController@index')->name('dashboard');
+Route::post('/claimAachievement/{id}','DashboardController@claimAche');

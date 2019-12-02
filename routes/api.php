@@ -20,5 +20,9 @@ Route::post("/userlogin","UserController@userLogin");
 Route::post("/getasset","UserController@getAssets");
 Route::post("/gettopuser","UserController@getTopUers");
 Route::post("/getquestionset","UserController@getQuestionSet");
+Route::post('/finishanswer',"QuestionController@answerQuestion");
+Route::post('/getepoints',"EnergyController@index");
 Auth::routes();
+
 Route::post('/reducepoints', "DashboardController@reducePoints");
+Route::post('/ga',"DashboardController@gA");

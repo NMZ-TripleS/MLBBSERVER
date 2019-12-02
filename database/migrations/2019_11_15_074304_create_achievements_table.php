@@ -17,10 +17,10 @@ class CreateAchievementsTable extends Migration
             $table->bigIncrements('id');
             $table->string('title');
             $table->string('description');
-            $table->integer('t_p_count');//total point count
-            $table->integer('r_a_count');//right answer count
-            $table->integer('t_a_count');//total answer count
-            $table->integer('d_amount');
+            $table->integer('t_p_count');//total point count 10
+            $table->integer('r_a_count');//right answer count 0
+            $table->integer('t_a_count');//total answer count 0
+            $table->integer('d_amount');// 1
             $table->timestamps();
         });
     }

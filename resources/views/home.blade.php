@@ -22,15 +22,15 @@
 </head>
 <body>
 <div id="app" class="my-background h-100">
-            <a class="dropdown-item" href="{{ route('logout') }}"
-               onclick="event.preventDefault();
-                                                         document.getElementById('logout-form').submit();">
-                {{ __('Logout') }}
-            </a>
+{{--            <a class="dropdown-item" href="{{ route('logout') }}"--}}
+{{--               onclick="event.preventDefault();--}}
+{{--                                                         document.getElementById('logout-form').submit();">--}}
+{{--                {{ __('Logout') }}--}}
+{{--            </a>--}}
 
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
-            </form>
+{{--            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">--}}
+{{--                @csrf--}}
+{{--            </form>--}}
 
     <main class="py-4 h-100">
 
@@ -38,40 +38,36 @@
         <div class="row h-100">
             <div class="move_to_center my-auto mx-auto">
                 <div class="card p-3">
-                    <h6 class="text-center"><b>Mickel Linn</b></h6>
+                    <h6 class="text-center"><b style="text-transform: uppercase;">{{ \Illuminate\Support\Facades\Auth::user()->name }}</b></h6>
                     <div class="container">
                         <div class="row">
                             <div class="col-md-6">
                                 <img src="{{asset("images/diamond_icon.png")}}" width="20" height="20" alt="Diamond">
-                                <p class="d-inline-block">10</p>
+                                <p class="d-inline-block">{{ $diamonds}}</p>
                             </div>
                             <div class="col-md-6">
                                 <img src="{{asset("images/coin_black.png")}}" width="16" height="16" alt="Diamond">
-                                <p class="d-inline-block">50</p>
+                                <p class="d-inline-block">{{ $points }}</p>
                             </div>
                         </div>
                     </div>
                     <div class="container reward_claim_box mt-3 p-2">
+                        @foreach($achievements as $achievement)
                         <div class="row">
                             <div class="col-md-8 mt-2">
-                                <p>Reach total of 200 files</p>
+                                <p>{{ $achievement->description }}</p>
                             </div>
                             <div class="col-md-4">
-                                <button type="submit" class="btn btn-my-primarydark btn-block">
-                                    {{ __('CLAIM') }}
-                                </button>
+                                    <form action="{{ url('claimAachievement',['id'=>$achievement->id]) }}" method="POST">
+                                        @csrf
+                                    <button type="submit" class="btn btn-my-primarydark btn-block">
+                                        {{$achievement->d_amount}}
+                                        <img src="{{asset("images/white_diamond.png")}}" width="20" height="20" alt="Diamond">
+                                    </button>
+                                </form>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-8 mt-2">
-                                <p>Spin total of 20 times</p>
-                            </div>
-                            <div class="col-md-4">
-                                <button type="submit" class="btn btn-my-primarydark btn-block">
-                                    {{ __('CLAIM') }}
-                                </button>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
 
                     <a href="{{ url('dashboard') }}" type="submit" class="btn btn-my-primarydark btn-block mt-1">
